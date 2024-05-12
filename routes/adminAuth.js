@@ -1,7 +1,7 @@
 const express = require('express');
-const userRouter = express.Router();
+const adminRouter = express.Router();
 const zod = require('zod');
-const { User } = require('../models/userModel');
+const { Admin } = require('../models/adminModel');
 const { SECRET_KEY } = require('../config');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
@@ -21,8 +21,8 @@ const postSignup = async(req,res) => {
             })
             return
         }
-        const {email, password} = req.body;
-        const existingUser = await User.findOne({email});
+        const { email, password} = req.body;
+        const existingUser = await Admin.findOne({email});
         if(existingUser){
             res.json({
                 message:"User with this credential are already exist!"
@@ -32,18 +32,18 @@ const postSignup = async(req,res) => {
 
         const hashPassword = await bcrypt.hashSync(password, 10);
 
-        const user = await User.create({
+        const admin = await Admin.create({
             email,
             password:hashPassword
         })
 
-        const userId = user._id;
-        const token = jwt.sign({userId, email}, SECRET_KEY );
+        const adminId = user._id;
+        const token = jwt.sign({adminId, email}, SECRET_KEY );
 
         res.json({
             message:"You are logged in Successfuly",
             token:token,
-            _id:user._id,
+            _id:admin._id,
             success:true
         })
         return
@@ -67,16 +67,16 @@ const postSignin = async (req, res)=>{
             return
         }
     
-        const user = await User.findOne({email:req.body.email});
+        const admin = await Admin.findOne({email:req.body.email});
     
-        if(!user){
+        if(!admin){
             res.json({
                 message:"User with this email does not exist!"
             })
             return
         }
-        console.log(user)
-        const checkPassword = await bcrypt.compareSync(req.body.password,user.password);
+        console.log(admin)
+        const checkPassword = await bcrypt.compareSync(req.body.password,admin.password);
 
         if(!checkPassword){
             res.json({
@@ -85,13 +85,13 @@ const postSignin = async (req, res)=>{
             return
         }
 
-        const userId = user._id;
-        const token = await jwt.sign({userId}, SECRET_KEY );
+        const adminId = admin._id;
+        const token = await jwt.sign({adminId}, SECRET_KEY );
 
         res.json({
-            message:"User is login",
+            message:"Admin is login",
             token:token,
-            userId,
+            adminId,
             success:true
         })
         
@@ -107,12 +107,12 @@ const checkUser = async (req, res)=>{
     try{
         const token = req.headers.authorization.split(' ')[1];
         const decodedToken = jwt.verify(token ,  SECRET_KEY);
-        const userId = decodedToken.userId;
+        const adminId = decodedToken.userId;
     
-        const userData = await User.find({_id:userId});
+        const adminData = await Admin.find({_id:adminId});
     
         res.json({
-            userData,
+            adminData,
             message:"User exist",
             success:true
         })
@@ -125,17 +125,17 @@ const checkUser = async (req, res)=>{
 
 }
 
-userRouter
+adminRouter
     .route('/signup')
     .post(postSignup)
-userRouter
+adminRouter
     .route('/signin')
     .post(postSignin)
 
-userRouter
+adminRouter
     .route('/checkUser')
     .get(checkUser)
    
 module.exports={
-    userRouter
+    adminRouter
 }    

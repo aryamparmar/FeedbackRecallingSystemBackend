@@ -1,0 +1,83 @@
+const mongoose = require('mongoose');
+
+const sessionFeedbackSchema = new mongoose.Schema({
+    firstname:{
+        type:String,
+        required:true,
+        trim:true
+    },
+    lastname:{
+        type:String,
+        required:true,
+        trim:true
+    },
+    email:{
+        type:String,
+        required:true,
+        unique:true,
+        trim:true
+    },
+    courseTitle:{
+        type:String,
+        required:true,
+        trim:true
+    },
+    instructorName:{
+        type:String,
+        required:true
+    },
+    presentation:{
+        wellOrganized:Number,
+        lengthAndTime:Number,
+        format:Number,
+        clearAndUnderstandable:Number,
+        handouts:Number,
+        attendingSession:Number,
+        libraryResources:Number,
+    },
+    overallRate:{
+        type:Number,
+        required:true,
+        trim:true
+    },
+    subjectClear:{
+        type:String,
+        required:true,
+        trim:true
+    },
+    subjectNotClear:{
+        type:Number,
+        required:true,
+        trim:true
+    },
+    meetExpectation:{
+        type:String,
+        required:true,
+        trim:true
+    },
+    suggestion:{
+        type:String,
+        required:true,
+        trim:true
+    },
+    presenter:{
+        wellOrganized:Number,
+        clearPresented:Number,
+        knowledgeable:Number,
+        clarifyingIssue:Number,
+        encourageStudent:Number,
+        communicationSkill:Number,
+    },
+    presenterRate:{
+        type:Number,
+        required:true,
+        trim:true
+    }
+
+})
+
+const sessionFeedback = mongoose.model('sessionFeedback', sessionFeedbackSchema);
+
+module.exports={
+    sessionFeedback
+}

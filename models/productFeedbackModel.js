@@ -1,0 +1,76 @@
+const mongoose = require('mongoose');
+
+const productFeedbackSchema = new mongoose.Schema({
+    name:{
+        type:String,
+        required:true,
+        trim:true
+    },
+    email:{
+        type:String,
+        required:true,
+        unique:true,
+        trim:true
+    },
+    overallImpression:{
+        type:Number,
+        required:true,
+        trim:true
+    },
+    likeMost:{
+        type:String,
+        required:true,
+        trim:true
+    },
+    improve:{
+        type:String,
+        required:true,
+        trim:true
+    },
+    quality:{
+        type:Number,
+        required:true,
+        trim:true
+    },
+    innovate:{
+        type:Number,
+        required:true,
+        trim:true
+    },
+    honesty:{
+        type:String,
+        required:true,
+        trim:true
+    },
+    valueForMoney:{
+        type:Number,
+        required:true,
+        trim:true
+    },
+    buyProduct:{
+        type:String,
+        required:true,
+        trim:true
+    },
+    replace:{
+        type:Number,
+        required:true,
+        trim:true
+    },
+    recommend:{
+        type:String,
+        required:true,
+        trim:true
+    },
+    reason:{
+        type:String,
+        required:true,
+        trim:true
+    }
+})
+
+const productFeedback = mongoose.model('productFeedback', productFeedbackSchema);
+
+module.exports={
+    productFeedback
+}
