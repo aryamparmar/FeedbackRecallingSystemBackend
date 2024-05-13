@@ -8,7 +8,7 @@ const suggestionFeedbackSchema = new mongoose.Schema({
     email: String,
     selectedOptions: [{
         type: String,
-        enum: ['Compliment', 'Suggestion for improvement', 'Feedback', 'Confidential', 'Enquiry', 'Raised Before']
+        enum: ['This is a Compliment', 'This is a Suggestion for improvement']
     }],
     businessName: String,
     details: String,

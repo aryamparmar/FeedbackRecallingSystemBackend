@@ -9,7 +9,7 @@ const feedbackBody = zod.object({
         lastName: zod.string()
     }),
     email: zod.string().email(),
-    selectedOptions: zod.array(zod.enum(['Compliment', 'Suggestion for improvement', 'Feedback', 'Confidential', 'Enquiry', 'Raised Before'])),
+    selectedOptions: zod.array(zod.enum(['This is a Compliment', 'This is a Suggestion for improvement'])),
     businessName: zod.string(),
     details: zod.string(),
     improvementAction: zod.string(),
